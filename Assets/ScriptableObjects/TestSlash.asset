@@ -10,9 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ff41ad85c19b9ddea6e25ae673a2c16, type: 3}
-  m_Name: New Card Data
+  m_Name: TestSlash
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
-  name: 
-  description: 
-  cost: 0
+  sprite: {fileID: 21300000, guid: 1e8bb08ee34dad9a6af9969a87c2f5c7, type: 3}
+  cardName: SlashTest
+  description: Slash test desc
+  cost: 3
+  cardActions:
+  - category: 0
+    damageAction: 0
+    defenseAction: 0
+    minPower: 3
+    maxPower: 6

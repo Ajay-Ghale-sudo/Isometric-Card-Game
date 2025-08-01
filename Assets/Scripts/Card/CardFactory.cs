@@ -1,28 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CardFactory : MonoBehaviour
 {
-    [Header("Card Settings")] 
+    [Header("Card Objects")] 
     public GameObject cardPrefab;
     public GameObject visualHolder;
     public GameObject cardVisualPrefab;
-    public int initialCardCount = 5;
     
-    [Header("Layout")]
+    [Header("Card Layout Controls")]
     public CardLayoutController cardLayoutController;
 
-    void Start()
+    [Header("Card Data Controls")] 
+    public List<CardData> cardData;
+
+    public void SpawnHand()
     {
-        for (int i = 0; i < initialCardCount; i++)
+        foreach (CardData data in cardData)
         {
             Card card = CreateCard();
             CardVisual cardVisual = CreateCardVisual();
             BindCardEvents(card, cardVisual);
+            AssignCardDataToVisual(cardVisual, data);
             StartCoroutine(DelayedVisualPlacement(card, cardVisual));
-            
         }
     }
 
@@ -46,7 +47,6 @@ public class CardFactory : MonoBehaviour
         return newCard;
     }
 
-
     private void BindCardEvents(Card card, CardVisual cardVisual)
     {
         card.DragEvent.AddListener(cardLayoutController.CheckNearestNeighbors);
@@ -65,5 +65,12 @@ public class CardFactory : MonoBehaviour
         CardVisual newCardVisual = Instantiate(cardVisualPrefab, visualHolder.transform).GetComponent<CardVisual>();
         return newCardVisual;
     }
-    
+
+    private void AssignCardDataToVisual(CardVisual cardVisual, CardData data)
+    {
+        cardVisual.cardName.text = data.cardName;
+        cardVisual.cardCost.text = data.cost.ToString();
+        cardVisual.cardDescription.text = data.description;
+        cardVisual.cardImage.sprite = data.sprite;
+    }
 }

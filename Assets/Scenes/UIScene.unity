@@ -774,9 +774,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 1173765977788429841, guid: 5cfa99e6483e2405b8d130f6cf69e7e9, type: 3}
   visualHolder: {fileID: 1376839394}
-  cardVisualPrefab: {fileID: 7866775798743478847, guid: 7476c02532eb15d17a67780ed9f8abd9, type: 3}
-  initialCardCount: 8
+  cardVisualPrefab: {fileID: 7866775798743478847, guid: eb06b902eab8dc02b837f36a88c9145a, type: 3}
   cardLayoutController: {fileID: 1381730649}
+  cardData:
+  - {fileID: 11400000, guid: cd3ba1f3e00bfedcf9afa3163f59d805, type: 2}
+  - {fileID: 11400000, guid: 38d195ccacf3414969e34a21f3d0334b, type: 2}
+  - {fileID: 11400000, guid: c6af54b15796e4e44ac5e69695e5092d, type: 2}
+  - {fileID: 11400000, guid: 38d195ccacf3414969e34a21f3d0334b, type: 2}
+  - {fileID: 11400000, guid: cd3ba1f3e00bfedcf9afa3163f59d805, type: 2}
 --- !u!1 &1754656339
 GameObject:
   m_ObjectHideFlags: 0
@@ -834,7 +839,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Spawn Hand
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -996,9 +1001,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1447109545}
-        m_TargetAssemblyTypeName: CardLayoutController, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 1447109547}
+        m_TargetAssemblyTypeName: CardFactory, Assembly-CSharp
+        m_MethodName: SpawnHand
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
