@@ -1,8 +1,6 @@
-using System;
+using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 public class CardVisual : MonoBehaviour
 {
@@ -25,6 +23,12 @@ public class CardVisual : MonoBehaviour
 
     [SerializeField] private float _rotationAmount = 30f;
     private Vector3 _rotationDelta;
+
+    [Header("Card Data Elements")]
+    public TextMeshProUGUI cardName;
+    public TextMeshProUGUI cardDescription;
+    public TextMeshProUGUI cardCost;
+    public Image cardImage;
 
     public void Initialize(Card card)
     {
@@ -54,6 +58,7 @@ public class CardVisual : MonoBehaviour
 
     }
 
+    #region CardMovement
     private void MoveToTarget(Card card)
     {
         Vector3 currentPosition = transform.position;
@@ -63,8 +68,6 @@ public class CardVisual : MonoBehaviour
 
         FollowRotation(card);
     }
-
-
     
     private void FollowRotation(Card card)
     {
@@ -77,4 +80,7 @@ public class CardVisual : MonoBehaviour
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y,
             Mathf.Clamp(_rotationDelta.x, -60, 60));
     }
+
+    #endregion
+
 }
