@@ -72,5 +72,9 @@ public class CardFactory : MonoBehaviour
         cardVisual.cardCost.text = data.cost.ToString();
         cardVisual.cardDescription.text = data.description;
         cardVisual.cardImage.sprite = data.sprite;
+        for (int i = 0; i < data.cardActions.Count; i++)
+        {
+            cardVisual.cardPowerRange.text += data.cardActions[i].minPower + " - " +  data.cardActions[i].maxPower + "\n"; 
+        }
     }
 }

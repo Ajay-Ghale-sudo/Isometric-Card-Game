@@ -28,6 +28,7 @@ public class CardVisual : MonoBehaviour
     public TextMeshProUGUI cardName;
     public TextMeshProUGUI cardDescription;
     public TextMeshProUGUI cardCost;
+    public TextMeshProUGUI cardPowerRange;
     public Image cardImage;
 
     public void Initialize(Card card)
