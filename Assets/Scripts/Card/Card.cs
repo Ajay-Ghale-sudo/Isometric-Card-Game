@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler,  IPointerEnterHandler, IPointerExitHandler
 {
     public int cardID;
-    //private bool _isDragging = false;
+    public bool wasDragged = false;
 
     public Vector2 anchorPos { get; set; }
     private Vector2 _dragPos { get; }
@@ -29,16 +29,6 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
             transform.position = pointerData.position;
         }
     }
-
-    void Update()
-    {
-        /*
-        Vector2 targetPosition = Input.mousePosition - offset;
-        Vector2 direction = targetPosition - (Vector2)transform.position.normalized;
-        Vector2 velocity = direction * Mathf.Min(moveSpeedLimit, Vector2.Distance(transform.position, targetPosition) / Time.deltaTime);
-        transform.Translate(velocity * Time.deltaTime);
-        */
-    }
     
     public void OnDrag(PointerEventData eventData)
     {
@@ -56,16 +46,16 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     {
         transform.position = anchorPos;
         EndDragEvent.Invoke(this);
+        wasDragged = true;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        
+        PointerEnterEvent.Invoke(this);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        
+        PointerExitEvent.Invoke(this);
     }
-    
 }
