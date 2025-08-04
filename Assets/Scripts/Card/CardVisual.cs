@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,22 +6,24 @@ using UnityEngine.UI;
 public class CardVisual : MonoBehaviour
 {
     private Vector3 lastPosition;
-    private float distanceThreshold;
+    private float swapDistanceThreshold;
+    private static float moveDistanceThreshold = 0.0015f;
     private Vector3 visualPos;
-    public Image image;
     private Card _card;
+
+    [Header("References")] 
+    [SerializeField] private Transform _shakeParent;
+    [SerializeField] private Transform _tiltParent;
 
     private bool _isDragging = false;
     private bool _isInitialized = false;
 
-    [Header("Movement Parameters")] [SerializeField]
-    private float _followSpeed = 15.0f;
-
+    [Header("Movement Parameters")] 
+    [SerializeField] private float _followSpeed = 15.0f;
     private Vector3 _movementDelta;
 
-    [Header("Rotation Parameters")] [SerializeField]
-    private float _rotationSpeed = 50.0f;
-
+    [Header("Rotation Parameters")] 
+    [SerializeField] private float _rotationSpeed = 50.0f;
     [SerializeField] private float _rotationAmount = 30f;
     private Vector3 _rotationDelta;
 
@@ -30,6 +33,19 @@ public class CardVisual : MonoBehaviour
     public TextMeshProUGUI cardCost;
     public TextMeshProUGUI cardPowerRange;
     public Image cardImage;
+
+    [Header("Scale Params")] 
+    [SerializeField] private float _scaleOnHover = 1.15f;
+    [SerializeField] private float _scaleOnSelect = 1.25f;
+    [SerializeField] private float _scaleTransitionTime = 0.15f;
+    [SerializeField] private Ease _scaleEase = Ease.OutBack;
+
+    [Header("Hover Params.")] 
+    [SerializeField] private float _hoverPunchAngle = 5.0f;
+    [SerializeField] private float _hoverTransition = 0.15f;
+    
+    private bool _isSelected = false;
+    private bool _scaleAnimations = true;
 
     public void Initialize(Card card)
     {
@@ -46,6 +62,11 @@ public class CardVisual : MonoBehaviour
 
     public void OnBeginDrag(Card card)
     {
+        if (_scaleAnimations)
+        {
+            transform.DOScale(_scaleOnSelect, _scaleTransitionTime);
+        }
+        
         _isDragging = true;
     }
 
@@ -59,14 +80,46 @@ public class CardVisual : MonoBehaviour
 
     }
 
+    public void OnHover(Card card)
+    {
+        
+        if (_scaleAnimations && !_isDragging)
+        {
+            print("Hovered");
+            transform.DOScale(_scaleOnHover, _scaleTransitionTime).SetEase(_scaleEase);
+            transform.DOPunchRotation(Vector3.forward * _hoverPunchAngle, _hoverTransition).SetEase(_scaleEase);
+        }
+    }
+
+    public void OnEndHover(Card card)
+    {
+        if (_scaleAnimations)
+        {
+            transform.DOScale(1.0f, _scaleTransitionTime).SetEase(_scaleEase);
+        }
+
+        DOTween.Kill(2, true);
+        
+    }
+
+    public void Select()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            transform.localPosition = transform.localPosition + (Vector3.up * 50.0f);
+        }
+    }
+
     #region CardMovement
     private void MoveToTarget(Card card)
     {
         Vector3 currentPosition = transform.position;
         Vector3 targetPosition = card.transform.position;
-        Vector3 newPosition = Vector3.Lerp(currentPosition, targetPosition, Time.deltaTime * _followSpeed);
-        transform.position = newPosition;
-
+        if (Vector3.Distance(currentPosition, targetPosition) > moveDistanceThreshold)
+        {
+            Vector3 newPosition = Vector3.Lerp(currentPosition, targetPosition, Time.deltaTime * _followSpeed);
+            transform.position = newPosition;
+        }
         FollowRotation(card);
     }
     

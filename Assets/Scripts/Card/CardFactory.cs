@@ -53,6 +53,8 @@ public class CardFactory : MonoBehaviour
         card.DragEvent.AddListener(cardVisual.OnDrag);
         card.BeginDragEvent.AddListener(cardVisual.OnBeginDrag);
         card.EndDragEvent.AddListener(cardVisual.OnEndDrag);
+        card.PointerEnterEvent.AddListener(cardVisual.OnHover);
+        card.PointerExitEvent.AddListener(cardVisual.OnEndHover);
     }
 
     private CardVisual CreateCardVisual()
