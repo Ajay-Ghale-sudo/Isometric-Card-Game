@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardFactory : MonoBehaviour
+public class CardFactory  : MonoBehaviour
 {
     [Header("Card Objects")] 
     public GameObject cardPrefab;
@@ -35,7 +35,7 @@ public class CardFactory : MonoBehaviour
         cardVisual.Initialize(card);
     }
 
-    public Card CreateCard()
+    private Card CreateCard()
     {
         if (cardPrefab == null || cardLayoutController == null)
         {
